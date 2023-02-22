@@ -24,11 +24,13 @@ const createMessageSchema = z.object({
   ...messageCore
 })
 
-const createMessageResponseSchema = z.object({
+const messageResponseSchema = z.object({
   id: z.string().uuid(),
   createdAt: z.string().datetime(),
   ...messageCore
 })
+
+const messageListResponseSchema = z.array(messageResponseSchema)
 
 const updateMessageSchema = z.object({
   from: z.string({
@@ -54,5 +56,6 @@ export const { schemas: messageSchemas, $ref } = buildJsonSchemas({
   messageId,
   updateMessageSchema,
   createMessageSchema,
-  createMessageResponseSchema
+  messageResponseSchema,
+  messageListResponseSchema
 }, { $id: 'messageSchemas'})

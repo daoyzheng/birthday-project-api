@@ -7,26 +7,32 @@ function messageRoutes(server: FastifyInstance, options: any, done: () => void) 
     schema: {
       body: $ref('createMessageSchema'),
       response: {
-        201: $ref('createMessageResponseSchema')
+        201: $ref('messageResponseSchema')
       }
     }
   }, createMessageHandler)
   server.put('/:id', {
+    onRequest: [server.authenticate],
     schema: {
       body: $ref('updateMessageSchema'),
       params: $ref('messageId'),
       response: {
-        200: $ref('createMessageResponseSchema')
+        200: $ref('messageResponseSchema')
       }
     }
   }, updateMessageHandler)
   server.delete('/:id', {
+    onRequest: [server.authenticate],
     schema: {
       params: $ref('messageId')
     }
   }, deleteMessageHandler)
   server.get('/', {
-    // onRequest: [server.authenticate]
+    schema: {
+      response: {
+        200: $ref('messageListResponseSchema')
+      }
+    }
   }, getMessagesHandler)
   done()
 }
