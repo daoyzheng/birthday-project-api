@@ -9,5 +9,9 @@ export const createMessage = async (message: CreateMessageInput) => {
 }
 
 export const getMessages = async () => {
-  return []
+  return await prisma.message.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    }
+  })
 }

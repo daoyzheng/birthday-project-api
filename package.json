@@ -19,6 +19,7 @@
   "homepage": "https://github.com/daoyzheng/birthday-project-api#readme",
   "dependencies": {
     "@prisma/client": "^4.10.1",
+    "bcrypt": "^5.1.0",
     "fastify": "^4.13.0",
     "fastify-jwt": "^4.2.0",
     "fastify-zod": "^1.2.0",

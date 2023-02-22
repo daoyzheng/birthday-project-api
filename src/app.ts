@@ -17,6 +17,21 @@ for (const schema of messageSchemas) {
 server.register(userRoutes, { prefix: 'api/users' })
 server.register(messageRoutes, { prefix: 'api/messages' })
 
+server.setErrorHandler(function (error, request, reply) {
+  const statusCode = error.statusCode
+  const message = error.message
+  this.log.error(error)
+  if (statusCode) {
+    if (statusCode === 401) {
+      reply.status(statusCode).send({ statusCode, message, error: 'Unauthorized' })
+    } else {
+      reply.status(statusCode).send({ statusCode, message })
+    }
+  }
+  else
+    reply.send(error)
+})
+
 const main = async () => {
   try {
     await server.listen({
