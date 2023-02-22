@@ -1,5 +1,5 @@
 import {z} from 'zod'
-import { buildJsonSchema, buildJsonSchemas } from 'fastify-zod'
+import { buildJsonSchemas } from 'fastify-zod'
 
 const messageCore = {
   from: z.string({
@@ -25,7 +25,7 @@ const createMessageSchema = z.object({
 })
 
 const createMessageResponseSchema = z.object({
-  id: z.string(),
+  id: z.string().uuid(),
   createdAt: z.string().datetime(),
   ...messageCore
 })
@@ -35,4 +35,4 @@ export type CreateMessageInput = z.infer<typeof createMessageSchema>
 export const { schemas: messageSchemas, $ref } = buildJsonSchemas({
   createMessageSchema,
   createMessageResponseSchema
-})
+}, { $id: 'messageSchemas'})

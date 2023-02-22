@@ -11,7 +11,9 @@ function messageRoutes(server: FastifyInstance, options: any, done: () => void) 
       }
     }
   }, createMessageHandler)
-  server.get('/', getMessagesHandler)
+  server.get('/', {
+    // onRequest: [server.authenticate]
+  }, getMessagesHandler)
   done()
 }
 

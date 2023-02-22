@@ -1,18 +1,47 @@
-import Fastify from "fastify"
+import Fastify, { FastifyReply, FastifyRequest } from "fastify"
 import userRoutes from "./modules/user/user.route"
 import messageRoutes from './modules/message/message.route'
 import { messageSchemas } from "./modules/message/message.schema"
+import { userSchemas } from "./modules/user/user.schema"
+const fp = require("fastify-plugin")
+require('dotenv').config()
+
+declare module "fastify" {
+  export interface FastifyInstance {
+    authenticate: any
+  }
+  export interface FastifyRequest {
+    jwtVerify: any
+  }
+  export interface FastifyReply {
+    jwtSign: any
+  }
+}
 
 const server = Fastify({ logger: true })
 const PORT = 5000
+const secret = process.env.JWT_SECRET
 
 server.get('/healthcheck', async () => {
   return { status: 'OK' }
 })
 
-for (const schema of messageSchemas) {
+for (const schema of [...messageSchemas, ...userSchemas]) {
   server.addSchema(schema)
 }
+
+
+server.register(require("@fastify/jwt"), { secret, sign: {
+  expiresIn: '1d'
+}})
+
+server.decorate("authenticate", async function(request: FastifyRequest, reply: FastifyReply) {
+  try {
+    await request.jwtVerify()
+  } catch (err) {
+    reply.send(err)
+  }
+})
 
 server.register(userRoutes, { prefix: 'api/users' })
 server.register(messageRoutes, { prefix: 'api/messages' })
