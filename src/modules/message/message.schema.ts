@@ -30,9 +30,29 @@ const createMessageResponseSchema = z.object({
   ...messageCore
 })
 
+const updateMessageSchema = z.object({
+  from: z.string({
+    required_error: 'From is required',
+    invalid_type_error: 'from must be a string'
+  }),
+  body: z.string({
+    required_error: 'body is required',
+    invalid_type_error: 'body must be a string'
+  })
+})
+
+const messageId = z.object({
+  id: z.string().uuid(),
+});
+
+
 export type CreateMessageInput = z.infer<typeof createMessageSchema>
+export type UpdateMessageInput = z.infer<typeof updateMessageSchema>
+export type ParamsInput = z.infer<typeof messageId>
 
 export const { schemas: messageSchemas, $ref } = buildJsonSchemas({
+  messageId,
+  updateMessageSchema,
   createMessageSchema,
   createMessageResponseSchema
 }, { $id: 'messageSchemas'})

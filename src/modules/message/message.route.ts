@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify"
-import { createMessageHandler, getMessagesHandler } from "./message.controller"
+import { createMessageHandler, deleteMessageHandler, getMessagesHandler, updateMessageHandler } from "./message.controller"
 import { $ref } from "./message.schema"
 
 function messageRoutes(server: FastifyInstance, options: any, done: () => void) {
@@ -11,6 +11,20 @@ function messageRoutes(server: FastifyInstance, options: any, done: () => void) 
       }
     }
   }, createMessageHandler)
+  server.put('/:id', {
+    schema: {
+      body: $ref('updateMessageSchema'),
+      params: $ref('messageId'),
+      response: {
+        200: $ref('createMessageResponseSchema')
+      }
+    }
+  }, updateMessageHandler)
+  server.delete('/:id', {
+    schema: {
+      params: $ref('messageId')
+    }
+  }, deleteMessageHandler)
   server.get('/', {
     // onRequest: [server.authenticate]
   }, getMessagesHandler)
