@@ -18,7 +18,11 @@ declare module "fastify" {
   }
 }
 
-const server = Fastify({ logger: true })
+const server = Fastify({ 
+  logger: true,
+  trustProxy: true
+})
+server.register(require('fastify-https-always'))
 const PORT = 5000
 const secret = process.env.JWT_SECRET
 
