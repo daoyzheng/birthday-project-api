@@ -3,6 +3,7 @@ import userRoutes from "./modules/user/user.route"
 import messageRoutes from './modules/message/message.route'
 import { messageSchemas } from "./modules/message/message.schema"
 import { userSchemas } from "./modules/user/user.schema"
+import cors from '@fastify/cors'
 const fp = require("fastify-plugin")
 require('dotenv').config()
 
@@ -23,6 +24,9 @@ const server = Fastify({
   trustProxy: true
 })
 server.register(require('fastify-https-always'))
+server.register(cors, {
+  origin: process.env.CLIENT_HOST
+})
 const PORT = 5000
 const secret = process.env.JWT_SECRET
 
