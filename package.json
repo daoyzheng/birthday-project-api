@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "prisma generate",
+    "build": "npx prisma generate",
     "dev": "tsnd --respawn --transpile-only --exit-child src/app.ts",
     "start": "ts-node src/app.ts"
   },
