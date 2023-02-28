@@ -9,7 +9,9 @@ export const authenticateUser = async (email:string, password: string) => {
     }
   })
   if (!user) throw new ApiError(401, 'Invalid email or password')
-  const verified = verifyPassword(password, user.password)
+  console.log('lksjdf', user.password)
+  console.log('hshsh', password)
+  const verified = await verifyPassword(password, user.password)
   if (!verified) throw new ApiError(401, 'Invalid email or password')
   return user
 }
