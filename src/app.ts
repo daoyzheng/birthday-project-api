@@ -27,7 +27,7 @@ server.register(require('fastify-https-always'))
 server.register(cors, {
   origin: process.env.CLIENT_HOST
 })
-const PORT = 5000
+const PORT = parseInt(process.env.PORT || '') || 5000
 const secret = process.env.JWT_SECRET
 
 server.get('/healthcheck', async () => {
