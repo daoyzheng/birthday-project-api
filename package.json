@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsnd --respawn --transpile-only --exit-child src/app.ts"
+    "dev": "tsnd --respawn --transpile-only --exit-child src/app.ts",
+    "start": "ts-node src/app.ts"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.14.0",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.9.5"
   }
