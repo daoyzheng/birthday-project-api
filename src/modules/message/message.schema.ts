@@ -40,6 +40,14 @@ const updateMessageSchema = z.object({
   body: z.string({
     required_error: 'body is required',
     invalid_type_error: 'body must be a string'
+  }),
+  city: z.string({
+    required_error: 'city is required',
+    invalid_type_error: 'city must be a string'
+  }),
+  country: z.string({
+    required_error: 'country is required',
+    invalid_type_error: 'country must be a string'
   })
 })
 
